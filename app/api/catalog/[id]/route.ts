@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server'; import {getProduct} from '../../../../lib/catalog'; export async function GET(_:Request,{params}:{params:Promise<{id:string}>}){const {id}=await params;const p=(await getProduct(Number(id)))[0];return p?NextResponse.json(p):NextResponse.json({error:'Not found'},{status:404})}

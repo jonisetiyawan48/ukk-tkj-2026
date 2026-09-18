@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server'; import {labMode} from '../../../../lib/db'; export async function GET(){return NextResponse.json({labMode,sqlInjection:labMode,xss:labMode,note:'Intentionally vulnerable classroom application. Keep isolated.'})}

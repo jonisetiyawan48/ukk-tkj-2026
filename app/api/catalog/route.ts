@@ -1,0 +1,1 @@
+import {NextRequest,NextResponse} from 'next/server'; import {listProducts} from '../../../lib/catalog'; export async function GET(req:NextRequest){try{return NextResponse.json(await listProducts(req.nextUrl.searchParams.get('q')||''));}catch(e:any){return NextResponse.json({error:String(e?.message||e)}, {status:500})}}

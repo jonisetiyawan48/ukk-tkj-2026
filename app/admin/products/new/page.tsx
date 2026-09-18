@@ -1,0 +1,1 @@
+import {listCategories} from '../../../../lib/catalog'; import {ProductForm} from '../../../../components/AdminForm'; export default async function New(){return <><div className="eyebrow">Produk</div><h2>Tambah produk</h2><ProductForm categories={await listCategories()}/></>}
