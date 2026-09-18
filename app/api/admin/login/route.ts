@@ -1,0 +1,2 @@
+import {NextRequest,NextResponse} from 'next/server'; import {login} from '../../../../lib/admin';
+export async function POST(req:NextRequest){try{const {email,password}=await req.json();const user=await login(email,password);if(!user){return NextResponse.json({error:'Email atau kata sandi salah.'},{status:401})}const res=NextResponse.json({ok:true,user:{id:user.id,name:user.name,role:user.role}});res.cookies.set('admin_session',String(user.id),{httpOnly:true,path:'/',sameSite:'lax'});return res}catch(e:any){return NextResponse.json({error:e.message},{status:400})}}

@@ -1,4 +1,4 @@
-import { query, unsafeQuery, labMode } from './db';
+import { query } from './db';
 import type { Category, Product } from './types';
 
 const select = `
@@ -35,23 +35,8 @@ export async function listCategories(): Promise<Category[]> {
 }
 
 export async function listProducts(search = ''): Promise<Product[]> {
-  if (labMode) {
-    // Sengaja rentan untuk demonstrasi SQL Injection pada lab.
-    const q = search.replaceAll('\\0', '');
-
-    const sql = `
-      ${select}
-      WHERE p.active = 1
-      AND (
-        p.name LIKE '%${q}%'
-        OR p.description LIKE '%${q}%'
-      )
-      ORDER BY p.name
-    `;
-
-    return unsafeQuery<any[]>(sql);
-  }
-
+  // Pencarian katalog sudah aman (query terparameter). SQL injection untuk
+  // praktikum dipindahkan ke form login admin, lihat lib/admin.ts -> login().
   const pattern = `%${search}%`;
 
   return query<any[]>(

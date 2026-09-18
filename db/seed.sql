@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
   name VARCHAR(150) NOT NULL,
   email VARCHAR(190) NOT NULL UNIQUE,
   phone VARCHAR(30),
+  password VARCHAR(190) NOT NULL DEFAULT '',
   role ENUM('USER','ADMIN') NOT NULL DEFAULT 'USER',
   status ENUM('ACTIVE','INACTIVE') NOT NULL DEFAULT 'ACTIVE',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -36,10 +37,10 @@ CREATE TABLE IF NOT EXISTS products (
   INDEX idx_products_category (category_id), INDEX idx_products_name (name)
 ) ENGINE=InnoDB;
 
-INSERT INTO users (name,email,phone,role,status) VALUES
-('Admin Koperasi','admin@sumbermakmur.desa','081234567890','ADMIN','ACTIVE'),
-('Warga Sumber Makmur','warga@sumbermakmur.desa','081234567891','USER','ACTIVE')
-ON DUPLICATE KEY UPDATE name=VALUES(name), phone=VALUES(phone), role=VALUES(role), status=VALUES(status);
+INSERT INTO users (name,email,phone,password,role,status) VALUES
+('Admin Koperasi','admin@sumbermakmur.desa','081234567890','koperasi123','ADMIN','ACTIVE'),
+('Warga Sumber Makmur','warga@sumbermakmur.desa','081234567891','warga123','USER','ACTIVE')
+ON DUPLICATE KEY UPDATE name=VALUES(name), phone=VALUES(phone), password=VALUES(password), role=VALUES(role), status=VALUES(status);
 
 INSERT IGNORE INTO categories (name,description) VALUES
 ('Beras','Pilihan beras untuk kebutuhan keluarga'),('Gula','Gula pasir dan pemanis kebutuhan dapur'),('Minyak','Minyak goreng pilihan untuk dapur'),('Tepung','Tepung untuk memasak dan membuat kue'),('Telur','Telur segar untuk kebutuhan harian'),('Mie Instan','Mie instan berbagai pilihan rasa'),('Minuman','Minuman untuk keluarga'),('Kebutuhan Rumah Tangga','Kebutuhan sehari-hari untuk rumah'),('Lainnya','Produk kebutuhan lain');
